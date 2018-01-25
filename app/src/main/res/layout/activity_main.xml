@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.elyeproj.democoroutinesrace.MainActivity">
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/progressBarRed"
+        android:tooltipText="Red"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:rcProgress="0.0"
+        app:rcMax="1000.0"
+        app:rcRadius="10dp"
+        app:rcBackgroundPadding="2dp"
+        app:rcProgressColor="#f00"/>
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/progressBarGreen"
+        android:tooltipText="Green"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:rcProgress="0.0"
+        app:rcMax="1000.0"
+        app:rcRadius="10dp"
+        app:rcBackgroundPadding="2dp"
+        app:rcProgressColor="#0f0" />
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/progressBarBlue"
+        android:tooltipText="Blue"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:rcProgress="0.0"
+        app:rcMax="1000.0"
+        app:rcRadius="10dp"
+        app:rcBackgroundPadding="2dp"
+        app:rcProgressColor="#00f" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start" />
+
+</LinearLayout>
