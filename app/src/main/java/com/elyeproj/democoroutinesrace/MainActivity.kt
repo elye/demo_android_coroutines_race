@@ -1,13 +1,14 @@
 package com.elyeproj.democoroutinesrace
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.Toast
 import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
+import com.elyeproj.democoroutinesrace.databinding.ActivityMainBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +18,14 @@ class MainActivity : AppCompatActivity() {
     private var redJob: Job? = null
     private var blueJob: Job? = null
 
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        buttonStart.setOnClickListener {
+        binding.buttonStart.setOnClickListener {
             startUpdate()
         }
     }
@@ -35,28 +38,34 @@ class MainActivity : AppCompatActivity() {
     private fun startUpdate() {
         resetRun()
 
-        greenJob = launch(Android) {
-            startRunning(progressBarGreen)
+        greenJob = GlobalScope.launch() {
+            startRunning(binding.progressBarGreen)
         }
 
-        redJob = launch(Android) {
-            startRunning(progressBarRed)
+        redJob = GlobalScope.launch() {
+            startRunning(binding.progressBarRed)
         }
 
-        blueJob =launch(Android) {
-            startRunning(progressBarBlue)
+        blueJob =GlobalScope.launch() {
+            startRunning(binding.progressBarBlue)
         }
     }
 
     private suspend fun startRunning(progressBar: RoundCornerProgressBar) {
-        progressBar.progress = 0f
+        runOnUiThread {
+            progressBar.progress = 0f
+        }
         while (progressBar.progress < 1000 && !raceEnd) {
+            runOnUiThread {
+                progressBar.progress += (1..10).random()
+            }
             delay(10)
-            progressBar.progress += (1..10).random()
         }
         if (!raceEnd) {
             raceEnd = true
-            Toast.makeText(this, "${progressBar.tooltipText} won!", Toast.LENGTH_SHORT).show()
+            runOnUiThread {
+                Toast.makeText(this, "${progressBar.tooltipText} won!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
